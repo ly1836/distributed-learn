@@ -1,6 +1,7 @@
 package com.sz.earlysummer.smsbombing.comm;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.config.RequestConfig;
@@ -50,15 +51,16 @@ public class HttpClientUtils {
 	try {
 	    if (null != jsonParam) {
 		// 解决中文乱码问题
-		StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");
+		StringEntity entity = new StringEntity(jsonParam.toString(),"utf-8");
 		entity.setContentEncoding("UTF-8");
-		entity.setContentType("application/json");
 		httpPost.setEntity(entity);
 	    }
+	    httpPost.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36");
+
 	    CloseableHttpResponse result = httpClient.execute(httpPost);
 	    // 请求发送成功，并得到响应
 	    if (result.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-		String str = "";
+		String str;
 		try {
 		    // 读取服务器返回过来的json字符串数据
 		    str = EntityUtils.toString(result.getEntity(), "utf-8");
@@ -92,6 +94,7 @@ public class HttpClientUtils {
 	HttpPost httpPost = new HttpPost(url);
 	// 设置请求和传输超时时间
 	httpPost.setConfig(requestConfig);
+	httpPost.setHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36");
 
 	if (header != null && !header.isEmpty()) {
 	    for (Map.Entry<String,Object> entry : header.entrySet()) {
@@ -217,7 +220,7 @@ public class HttpClientUtils {
      */
     public static JSONObject httpGetResponseHeader(String url) {
 	// get请求返回结果
-	JSONObject jsonResult = null;
+	JSONObject jsonResult = new JSONObject();
 	CloseableHttpClient client = HttpClients.createDefault();
 	// 发送get请求
 	HttpGet request = new HttpGet(url);
@@ -227,11 +230,10 @@ public class HttpClientUtils {
 
 	    // 请求发送成功，并得到响应
 	    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-		// 读取服务器返回过来的json字符串数据
-		HttpEntity entity = response.getEntity();
-		String strResult = EntityUtils.toString(entity, "utf-8");
-		// 把json字符串转换成json对象
-		jsonResult = JSONObject.parseObject(strResult);
+		Header[] allHeaders = response.getAllHeaders();
+		for(Header header : allHeaders){
+		    jsonResult.put(header.getName(),header.getValue());
+		}
 	    } else {
 		logger.error("get请求提交失败:" + url);
 	    }
@@ -240,6 +242,7 @@ public class HttpClientUtils {
 	} finally {
 	    request.releaseConnection();
 	}
+
 	return jsonResult;
     }
 }

@@ -2,6 +2,7 @@ package com.sz.earlysummer.smsbombing.module;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sz.earlysummer.smsbombing.comm.HttpClientUtils;
+import com.sz.earlysummer.smsbombing.comm.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BlockchainMedia {
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 巴比特财经
+     * <p>
+     * https://www.8btc.com/
+     * </p>
      *
      * @return true:成功  false:失败
      */
@@ -24,22 +27,49 @@ public class BlockchainMedia {
 	JSONObject jsonObject = new JSONObject();
 	jsonObject.put("mobile", phone);
 	JSONObject result = HttpClientUtils.httpPost("https://app.blockmeta.com/w1/n/sms", jsonObject);
-	logger.info(result.toJSONString());
+	LogUtil.info(result.toJSONString());
 	return result.isEmpty();
     }
 
     /**
-     * 共享财经
+     * 读币网
+     * <p>
+     * http://www.dubiwang.com/
+     * </P>
      *
-     * @return true:成功  false:失败
+     * @return
      */
-    public boolean gongxiangcaijing(String phone) {
-        //先获取cookie
-	HttpClientUtils.httpGet("http://new.gongxiangcj.com/user_info");
+    public boolean dubiwang(String phone) {
 
-	String url = "http://new.gongxiangcj.com/sendcode?remobile=Yu0olF&mobile=" + phone;
-	JSONObject result = HttpClientUtils.httpGet(url);
-	logger.info(result.toJSONString());
+	JSONObject result = HttpClientUtils.httpPost("http://www.dubiwang.com/Sms/send", "mobile="+phone);
+	LogUtil.info("读币网:{}"+result.toJSONString());
+
+	if(result.getInteger("status") == 1){
+	    LogUtil.info("读币网:发送成功");
+	}
+	return result.isEmpty();
+    }
+
+    /**
+     * 链头条
+     * <p>
+     * http://www.chaintiao.com/register/send-code.html
+     * </P>
+     *
+     * @return
+     */
+    public boolean liantoutiao(String phone) {
+        JSONObject param = new JSONObject();
+	param.put("_csrf","SE5hMVRtUTAtLCxFHAkiAhs8KHojGjlVe3ZMXjcOA2MlBlBFOhxoRA==");
+	param.put("codeType","register");
+	param.put("phone",phone);
+
+	JSONObject result = HttpClientUtils.httpPost("http://www.chaintiao.com/register/send-code.html",param);
+	LogUtil.info("链头条:{}"+result.toJSONString());
+
+	if(result.getInteger("status") == 1){
+	    LogUtil.info("链头条:发送成功");
+	}
 	return result.isEmpty();
     }
 }

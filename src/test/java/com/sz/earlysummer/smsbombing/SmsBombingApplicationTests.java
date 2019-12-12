@@ -22,7 +22,7 @@ public class SmsBombingApplicationTests {
             Thread.sleep(500);
         }*/
 
-        HttpClientUtils.httpGetResponseHeader("http://new.gongxiangcj.com/user_info");
+        blockchainMedia.liantoutiao("18674492943");
     }
 
 }
