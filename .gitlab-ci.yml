@@ -20,3 +20,5 @@ build:
     - mvn clean package docker:build -DskipTests
   tags:
     - my-runner
+  only:
+    - master
