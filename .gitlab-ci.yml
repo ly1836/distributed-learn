@@ -7,6 +7,8 @@ pull:
   script:
     - cd /usr/local/work/java/SMS-Bombing
     - sudo git pull http://ly%40gitlab.com:12345678@192.168.2.167:8888/dev/SMS-Bombing.git
+  tags:
+    - springboot
   only:
     - master
 
@@ -16,5 +18,7 @@ build:
   script:
     - cd /usr/local/work/java/SMS-Bombing
     - mvn clean package docker:build -DskipTests
+  tags:
+    - springboot
   only:
     - master
