@@ -7,6 +7,10 @@ pull:
   script:
     - cd /usr/local/work/java/SMS-Bombing
     - git pull http://ly%40gitlab.com:12345678@192.168.2.167:8888/dev/SMS-Bombing.git
+  tags:
+    - my-runner
+  only:
+    - master
 
 
 build:
@@ -14,3 +18,5 @@ build:
   script:
     - cd /usr/local/work/java
     - mvn clean package docker:build -DskipTests
+  tags:
+    - my-runner
