@@ -51,7 +51,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
             <!-- 添加docker-maven-plugin插件 -->
             <plugin>
                 <groupId>com.spotify</groupId>
