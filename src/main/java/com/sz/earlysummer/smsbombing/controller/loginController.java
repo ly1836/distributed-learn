@@ -13,6 +13,6 @@ public class loginController {
 
     @GetMapping(value = "register/send-code")
     public String login(Object object){
-        return "success";
+        return "Java project CI/CD test.";
     }
 }

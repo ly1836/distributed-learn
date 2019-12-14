@@ -6,7 +6,7 @@ pull:
   stage: pull
   script:
     - cd /usr/local/work/java
-    - git pull http://ly@gitlab.com:12345678@192.168.2.167.com:8888/dev/SMS-Bombing.git
+    - git pull http://l@192.168.2.167.com:8888/dev/SMS-Bombing.git
 
 
 build:
