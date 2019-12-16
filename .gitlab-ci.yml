@@ -1,7 +1,7 @@
 
 stages:
   - pull
-# - build
+  - build
 
 pull:
   stage: pull
@@ -15,12 +15,12 @@ pull:
     - master
 
 
-#build:
-#  stage: build
-#  script:
-#    - cd /usr/local/work/java/SMS-Bombing
-#    - mvn clean package docker:build -DskipTests
-#  tags:
-#    - springboot
-#  only:
-#    - master
+build:
+  stage: build
+  script:
+    - cd /usr/local/work/java/SMS-Bombing
+    - mvn clean package docker:build -DskipTests
+  tags:
+    - springboot
+  only:
+    - master
