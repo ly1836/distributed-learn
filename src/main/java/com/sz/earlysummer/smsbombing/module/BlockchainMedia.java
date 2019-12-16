@@ -3,8 +3,6 @@ package com.sz.earlysummer.smsbombing.module;
 import com.alibaba.fastjson.JSONObject;
 import com.sz.earlysummer.smsbombing.comm.HttpClientUtils;
 import com.sz.earlysummer.smsbombing.comm.LogUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
