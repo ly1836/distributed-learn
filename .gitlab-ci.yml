@@ -18,7 +18,7 @@ build:
   stage: build
   script:
     - sudo cd /usr/local/work/java/SMS-Bombing
-    - mvn clean install docker:build -DskipTests
+    - mvn clean package docker:build -DskipTests
   tags:
     - springboot
   only:
