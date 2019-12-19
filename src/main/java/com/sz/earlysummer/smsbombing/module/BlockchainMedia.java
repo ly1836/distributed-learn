@@ -24,7 +24,7 @@ public class BlockchainMedia {
     public boolean babite(String phone) {
 	JSONObject jsonObject = new JSONObject();
 	jsonObject.put("mobile", phone);
-	JSONObject result = HttpClientUtils.httpPost("https://app.blockmeta.com/w1/n/sms", jsonObject);
+	JSONObject result =HttpClientUtils.httpPost("https://app.blockmeta.com/w1/n/sms", jsonObject);
 	LogUtil.info(result.toJSONString());
 	return result.isEmpty();
     }
