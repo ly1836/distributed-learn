@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlockchainMedia {
 
-
     /**
      * 巴比特财经
      * <p>
