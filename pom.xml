@@ -48,14 +48,14 @@
     </dependencies>
 
     <build>
-        <plugins>
+        <!--<plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- 添加docker-maven-plugin插件 -->
-            <!--<plugin>
+            &lt;!&ndash; 添加docker-maven-plugin插件 &ndash;&gt;
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
@@ -76,8 +76,8 @@
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
                 </configuration>
-            </plugin>-->
-        </plugins>
+            </plugin>
+        </plugins>-->
 
 
 
