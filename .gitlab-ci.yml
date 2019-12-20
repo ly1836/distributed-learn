@@ -17,6 +17,7 @@ build:
   stage: build
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true
+    - sudo ls -l
   tags:
     - kubernetes
   only:

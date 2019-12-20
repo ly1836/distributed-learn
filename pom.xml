@@ -55,13 +55,13 @@
             </plugin>
 
             <!-- 添加docker-maven-plugin插件 -->
-            <plugin>
+            <!--<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
                     <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
-                    <!-- 指定Dockerfile所在的路径 -->
+                    &lt;!&ndash; 指定Dockerfile所在的路径 &ndash;&gt;
 
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <dockerHost>http://192.168.0.155:2375</dockerHost>
@@ -76,7 +76,7 @@
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
 
 
