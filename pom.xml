@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <docker.repostory>192.168.0.155</docker.repostory>
+        <docker.registry.name>library</docker.registry.name>
     </properties>
 
     <dependencies>
@@ -56,13 +58,13 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
+                <version>1.0.0</version>
                 <configuration>
-                    <dockerHost>http://192.168.2.167:2375</dockerHost>
-                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
-                    <imageName>jteasy/${project.artifactId}:${project.version}</imageName>
-                    <!-- Dockerfile 文件位置 -->
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <!-- 指定Dockerfile所在的路径 -->
+
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <dockerHost>http://192.168.0.155:2375</dockerHost>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -70,6 +72,9 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <serverId>docker-harbor</serverId>
+                    <registryUrl>${docker.repostory}</registryUrl>
+                    <pushImage>true</pushImage>
                 </configuration>
             </plugin>
         </plugins>
