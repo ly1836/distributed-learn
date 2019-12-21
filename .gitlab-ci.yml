@@ -2,6 +2,7 @@
 stages:
   - pull
   - build
+  - deploy
 
 pull:
   stage: pull
@@ -18,6 +19,16 @@ build:
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true
     - sudo ls -l
+  tags:
+    - kubernetes
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - sudo cd kubernetes/
+    - kubectl create -f deployment.yaml
   tags:
     - kubernetes
   only:
