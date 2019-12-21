@@ -35,6 +35,8 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                   imagePullPolicy: Always
                   ports:
                       - containerPort: 4567
+                        nam: http
+                        protocol: TCP
 
 ---
 apiVersion: v1
@@ -43,9 +45,10 @@ metadata:
     name: sms-bombing-service
 spec:
     type: NodePort
-    sessionAffinity: ClientIP
     selector:
-        app: nginx
+        app: sms-bombing
     ports:
-        - port: 4567
+        - port: 80
           nodePort: 31111
+          targetPort: 4567
+          protocol: TCP
