@@ -1,7 +1,28 @@
 
 stages:
+  - pull
+  - build
   - deploy
 
+pull:
+  stage: pull
+  script:
+    - sudo git pull http://ly%40gitlab.com:12345678@192.168.0.155:8899/work/SMS-Bombing.git
+  tags:
+    - kubernetes
+  only:
+    - master
+
+
+build:
+  stage: build
+  script:
+    - mvn clean package docker:build -Dmaven.test.skip=true
+    - sudo ls -l
+  tags:
+    - kubernetes
+  only:
+    - master
 
 deploy:
   stage: deploy
