@@ -27,11 +27,7 @@ build:
 deploy:
   stage: deploy
   script:
-    - pwd
-    - sudo cd kubernetes/
-    - pwd
-    - ls -l
-    - kubectl create -f ./deployment.yaml
+    - kubectl create -f ./kubernetes/deployment.yaml
   tags:
     - kubernetes
   only:
