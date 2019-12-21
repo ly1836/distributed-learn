@@ -35,7 +35,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                   imagePullPolicy: Always
                   ports:
                       - containerPort: 4567
-                        nam: http
+                        name: http
                         protocol: TCP
 
 ---
