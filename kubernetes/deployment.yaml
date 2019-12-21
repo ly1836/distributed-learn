@@ -15,7 +15,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                 app: sms-bombing
         spec:	    #期望Pod实现的功能（即在pod中部署）
             containers:	#生成container，与docker中的container是同一种
-                - name: 192.168.0.155/library/sms-bombing	#container的名称
+                - name: 192.168.0.155/library/sms-bombing:0.0.1-SNAPSHOT	#container的名称
                   image: 192.168.0.155/library/sms-bombing:0.0.1-SNAPSHOT	#使用镜像nginx:1.7.9创建container，该container默认80端口可访问
                   ports:
                       - containerPort: 4567
