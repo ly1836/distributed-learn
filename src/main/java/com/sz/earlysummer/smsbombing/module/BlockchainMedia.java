@@ -22,11 +22,11 @@ public class BlockchainMedia {
      * @return true:成功  false:失败
      */
     public boolean babite(String phone) {
-	JSONObject jsonObject = new JSONObject();
-	jsonObject.put("mobile", phone);
-	JSONObject result =HttpClientUtils.httpPost("https://app.blockmeta.com/w1/n/sms", jsonObject);
-	LogUtil.info(result.toJSONString());
-	return result.isEmpty();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("mobile", phone);
+        JSONObject result = HttpClientUtils.httpPost("https://app.blockmeta.com/w1/n/sms", jsonObject);
+        LogUtil.info(result.toJSONString());
+        return result.isEmpty();
     }
 
     /**
@@ -39,13 +39,13 @@ public class BlockchainMedia {
      */
     public boolean dubiwang(String phone) {
 
-	JSONObject result = HttpClientUtils.httpPost("http://www.dubiwang.com/Sms/send", "mobile="+phone);
-	LogUtil.info("读币网:{}"+result.toJSONString());
+        JSONObject result = HttpClientUtils.httpPost("http://www.dubiwang.com/Sms/send", "mobile=" + phone);
+        LogUtil.info("读币网:{}" + result.toJSONString());
 
-	if(result.getInteger("status") == 1){
-	    LogUtil.info("读币网:发送成功");
-	}
-	return result.isEmpty();
+        if (result.getInteger("status") == 1) {
+            LogUtil.info("读币网:发送成功");
+        }
+        return result.isEmpty();
     }
 
     /**
@@ -58,16 +58,16 @@ public class BlockchainMedia {
      */
     public boolean liantoutiao(String phone) {
         JSONObject param = new JSONObject();
-	param.put("_csrf","SE5hMVRtUTAtLCxFHAkiAhs8KHojGjlVe3ZMXjcOA2MlBlBFOhxoRA==");
-	param.put("codeType","register");
-	param.put("phone",phone);
+        param.put("_csrf", "SE5hMVRtUTAtLCxFHAkiAhs8KHojGjlVe3ZMXjcOA2MlBlBFOhxoRA==");
+        param.put("codeType", "register");
+        param.put("phone", phone);
 
-	JSONObject result = HttpClientUtils.httpPost("http://www.chaintiao.com/register/send-code.html",param);
-	LogUtil.info("链头条:{}"+result.toJSONString());
+        JSONObject result = HttpClientUtils.httpPost("http://www.chaintiao.com/register/send-code.html", param);
+        LogUtil.info("链头条:{}" + result.toJSONString());
 
-	if(result.getInteger("status") == 1){
-	    LogUtil.info("链头条:发送成功");
-	}
-	return result.isEmpty();
+        if (result.getInteger("status") == 1) {
+            LogUtil.info("链头条:发送成功");
+        }
+        return result.isEmpty();
     }
 }
