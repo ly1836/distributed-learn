@@ -18,6 +18,43 @@
         <java.version>1.8</java.version>
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.registry.name>library</docker.registry.name>
+
+        <!-- 跳过 -->
+        <jib.skip>false</jib.skip>
+        <!-- 基础镜像 -->
+        <jib.base.img>192.168.0.155/java:8</jib.base.img>
+        <!-- 启动参数设置 -->
+        <jib.entrypoint>
+            java $JAVA_OPTS \
+            $JVM_OPTS \
+            -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
+            -Dspring.profiles.active=$ACTIVE \
+            -cp /app/resources:/app/classes:/app/libs/* com.gt.FoodmanagerApplication
+        </jib.entrypoint>
+        <!--
+            默认设定JVM的参数
+            参数解释：
+            -XX:+PrintGCDateStamps 打印GC的时间戳
+            -XX:+PrintGCDetails  打印GC的明细信息
+            -XX:+PrintGCApplicationStoppedTime 打印GC期间程序暂停的时间
+            -XX:+PrintCommandLineFlags 打印已经设置过的详细JVM参数值
+            -XX:+HeapDumpOnOutOfMemoryError 内存溢出时生成堆转储快照文件
+            -Xloggc:/app/heapdump/heap_trace.log GC的日志路径
+            -XX:HeapDumpPath=/app/heapdump 生成堆转储快照文件所在的目录
+            -XX:-OmitStackTraceInFastThrow 大量抛出重复异常的时候打印完整的异常链信息
+        -->
+        <jib.env.jvm_opts>
+            -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags
+            -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump
+            -XX:-OmitStackTraceInFastThrow
+        </jib.env.jvm_opts>
+        <jib.maintainer>leiyang="491816301@qq.com"</jib.maintainer>
+        <!-- 默认的激活配置文件 -->
+        <jib.env.active>dev</jib.env.active>
+        <!-- 默认的端口 -->
+        <jib.env.server_port>8080</jib.env.server_port>
+        <!-- 时区 -->
+        <jib.env.tz>Asia/Shanghai</jib.env.tz>
     </properties>
 
     <dependencies>
@@ -44,24 +81,23 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- 添加docker-maven-plugin插件 -->
+            &lt;!&ndash; 添加docker-maven-plugin插件 &ndash;&gt;
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
                     <imageName>${docker.repostory}/${project.artifactId}:${project.version}</imageName>
-                    <!-- 指定Dockerfile所在的路径 -->
+                    &lt;!&ndash; 指定Dockerfile所在的路径 &ndash;&gt;
 
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <dockerHost>http://192.168.0.155:2375</dockerHost>
@@ -75,6 +111,50 @@
                     <serverId>docker-harbor</serverId>
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
+                </configuration>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <from>
+                        <!--base image-->
+                        <image>${jib.base.img}</image>
+                    </from>
+                    <container>
+                        <labels>
+                            <MAINTAINER>${jib.maintainer}</MAINTAINER>
+                        </labels>
+                        <workingDirectory>/app</workingDirectory>
+                        <environment>
+                            <!-- 时区 -->
+                            <TZ>${jib.env.tz}</TZ>
+                            <!-- 默认启动配置文件 dev -->
+                            <ACTIVE>${jib.env.active}</ACTIVE>
+                            <!-- 强制设置默认 8080端口 -->
+                            <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
+                            <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
+                        </environment>
+                        <useCurrentTimestamp>true</useCurrentTimestamp>
+                        <entrypoint>
+                            <arg>/bin/sh</arg>
+                            <arg>-c</arg>
+                            <arg>${jib.entrypoint}</arg>
+                        </entrypoint>
+                        <!-- 可选操作 -->
+                        <ports>
+                            <port>${jib.env.server_port}</port>
+                        </ports>
+                        <volumes>
+                            <volume>/app/logs</volume>
+                            <volume>/app/heapdump</volume>
+                        </volumes>
+                    </container>
                 </configuration>
             </plugin>
         </plugins>
