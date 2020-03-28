@@ -18,7 +18,7 @@ build:
   stage: build
   script:
     #- mvn clean package docker:build -Dmaven.test.skip=true
-    - mvn package -DskipTests jib:build -Dmaven.test.skip=true
+    - mvn clean package jib:build -DskipTests
     - sudo ls -l
   tags:
     - kubernetes

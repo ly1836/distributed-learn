@@ -141,10 +141,6 @@
                         <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
                         <image>${jib.base.img}</image>
                     </from>
-                    <to>
-                        <!--镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version-->
-                        <image>project/${project.artifactId}:${project.version}</image>
-                    </to>
                     <!--容器相关的属性-->
                     <container>
                         <!--要暴露的端口-->
