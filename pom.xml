@@ -16,8 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.repostory>192.168.0.155</docker.repostory>
-        <docker.registry.name>library</docker.registry.name>
+        <docker.repostory>192.168.0.155:80</docker.repostory>
+        <docker.registry.name>project</docker.registry.name>
 
         <!-- 跳过 -->
         <jib.skip>false</jib.skip>
@@ -143,7 +143,7 @@
                     </from>
                     <to>
                         <!--镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version-->
-                        <image>${docker.repostory}/${project.artifactId}:${project.version}</image>
+                        <image>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</image>
                     </to>
                     <!--容器相关的属性-->
                     <container>
