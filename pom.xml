@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.repostory>192.168.0.155</docker.repostory>
+        <docker.repostory>http://192.168.0.155</docker.repostory>
         <docker.registry.name>project</docker.registry.name>
 
         <!-- 跳过 -->
@@ -154,7 +154,6 @@
                     </container>
                     <!--用没配置安全认证的registry-->
                     <allowInsecureRegistries>true</allowInsecureRegistries>
-                    <sendCredentialsOverHttp>true</sendCredentialsOverHttp>
                 </configuration>
             </plugin>
         </plugins>
