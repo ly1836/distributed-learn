@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.repostory>192.168.0.155:80</docker.repostory>
+        <docker.repostory>192.168.0.155</docker.repostory>
         <docker.registry.name>project</docker.registry.name>
 
         <!-- 跳过 -->
