@@ -7,7 +7,7 @@ stages:
 pull:
   stage: pull
   script:
-    - sudo git pull
+    - sudo git pull origin
   tags:
     - kubernetes
   only:
