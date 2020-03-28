@@ -31,7 +31,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
         spec:	    #期望Pod实现的功能（即在pod中部署）
             containers:	#生成container，与docker中的container是同一种
                 - name: sms-bombing	#container的名称
-                  image: 192.168.0.155/project/sms-bombing:0.0.1-SNAPSHOT	#该container默认80端口可访问
+                  image: 192.168.0.155/library/sms-bombing:0.0.1-SNAPSHOT	#该container默认80端口可访问
                   imagePullPolicy: Always
                   ports:
                       - containerPort: 4567
