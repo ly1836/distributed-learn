@@ -7,7 +7,7 @@ stages:
 pull:
   stage: pull
   script:
-    - sudo git pull http://ly%40gitlab.com:admin123@192.168.0.155:8899/work/SMS-Bombing.git
+    - sudo git pull http://192.168.0.155:8899/work/SMS-Bombing.git
   tags:
     - kubernetes
   only:
