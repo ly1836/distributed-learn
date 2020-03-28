@@ -60,7 +60,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <imageName>${docker.repostory}/${project.artifactId}:${project.version}</imageName>
                     <!-- 指定Dockerfile所在的路径 -->
 
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
