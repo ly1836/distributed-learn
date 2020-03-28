@@ -37,6 +37,9 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                       - containerPort: 4567
                         name: http
                         protocol: TCP
+            imagePullSecrets:
+                - name: regcred
+            restartPolicy: Always
 
 ---
 #apiVersion: v1
