@@ -22,7 +22,7 @@
         <!-- 跳过 -->
         <jib.skip>false</jib.skip>
         <!-- 基础镜像 -->
-        <jib.base.img>192.168.0.155/java:8</jib.base.img>
+        <jib.base.img>java:8</jib.base.img>
         <!-- 启动参数设置 -->
         <jib.entrypoint>
             java $JAVA_OPTS \
@@ -85,14 +85,12 @@
 
     <build>
         <plugins>
-
-
-            <plugin>
+            <!--<plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <configuration>
                     <from>
-                        <!--base image-->
+                        &lt;!&ndash;base image&ndash;&gt;
                         <image>${jib.base.img}</image>
                     </from>
                     <container>
@@ -101,11 +99,11 @@
                         </labels>
                         <workingDirectory>/app</workingDirectory>
                         <environment>
-                            <!-- 时区 -->
+                            &lt;!&ndash; 时区 &ndash;&gt;
                             <TZ>${jib.env.tz}</TZ>
-                            <!-- 默认启动配置文件 dev -->
+                            &lt;!&ndash; 默认启动配置文件 dev &ndash;&gt;
                             <ACTIVE>${jib.env.active}</ACTIVE>
-                            <!-- 强制设置默认 8080端口 -->
+                            &lt;!&ndash; 强制设置默认 8080端口 &ndash;&gt;
                             <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
                             <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
                         </environment>
@@ -115,7 +113,7 @@
                             <arg>-c</arg>
                             <arg>${jib.entrypoint}</arg>
                         </entrypoint>
-                        <!-- 可选操作 -->
+                        &lt;!&ndash; 可选操作 &ndash;&gt;
                         <ports>
                             <port>${jib.env.server_port}</port>
                         </ports>
@@ -123,6 +121,36 @@
                             <volume>/app/logs</volume>
                             <volume>/app/heapdump</volume>
                         </volumes>
+                    </container>
+                </configuration>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!--使用jib插件-->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <configuration>
+                    <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
+                    <from>
+                        <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
+                        <image>${jib.base.img}</image>
+                    </from>
+                    <to>
+                        <!--镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version-->
+                        <image>project/${project.artifactId}:${project.version}</image>
+                    </to>
+                    <!--容器相关的属性-->
+                    <container>
+                        <!--要暴露的端口-->
+                        <ports>
+                            <port>${jib.env.server_port}</port>
+                        </ports>
                     </container>
                 </configuration>
             </plugin>
