@@ -27,7 +27,9 @@ build:
 deploy:
   stage: deploy
   script:
-    - kubectl replace -f ./kubernetes/deployment.yaml
+    - cd kubernetes
+    - kubectl apply -f deployment.yaml
+    - kubectl get pod,svc,deploy -l
   tags:
     - kubernetes
   only:
