@@ -13,6 +13,6 @@ public class loginController {
 
     @GetMapping(value = "register/send-code")
     public String login(Object object){
-        return "Java project CI/CD Kubernetes.----TEST[5]";
+        return "Java project CI/CD Kubernetes.----TEST[6]";
     }
 }
