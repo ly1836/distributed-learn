@@ -19,7 +19,9 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
             #升级过程中最多有多少个POD处于无法提供服务的状态
             #当maxSurge不为0时，该值也不能为0
             #例如：maxUnavaible=1，则表示Kubernetes整个升级过程中最多会有1个POD处于无法服务的状态。
-            maxUnavailable: 1
+            maxUnavailable: 0
+    # 保留3个历史记录
+    revisionHistoryLimit: 3
     replicas: 3	#使用该Deployment创建一个应用程序实例
     selector:	    #标签选择器，与上面的标签共同作用，目前不需要理解
         matchLabels: #选择包含标签app:nginx的资源
