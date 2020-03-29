@@ -19,6 +19,7 @@ build:
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true
     - sudo ls -l
+    - mvn clean
   tags:
     - kubernetes
   only:
