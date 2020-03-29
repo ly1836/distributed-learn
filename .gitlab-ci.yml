@@ -34,6 +34,8 @@ build:
   script:
     - echo $IMAGE_NAME > test.txt
     - cat test.txt
+    - mvn clean package docker:build -Dimage.name=$IMAGE_NAME -Dmaven.test.skip=true
+    - sudo ls -l
   tags:
     - kubernetes
   only:
