@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /sms
+  port: 4567
+
+spring:
+  profiles:
+    active: test
+
+logging:
+  config: classpath:logback-spring.xml
