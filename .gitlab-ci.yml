@@ -19,7 +19,6 @@ build:
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true
     - sudo ls -l
-    - cat ./kubernetes/deployment.yaml
   tags:
     - kubernetes
   only:
