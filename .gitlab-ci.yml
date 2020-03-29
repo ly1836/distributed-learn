@@ -29,7 +29,7 @@ deploy:
   script:
     - cd kubernetes
     - kubectl apply -f deployment.yaml
-    - kubectl get pod,svc,deploy -l
+    - kubectl get pod,svc,deploy
   tags:
     - kubernetes
   only:
