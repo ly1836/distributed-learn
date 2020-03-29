@@ -125,35 +125,64 @@
                 </configuration>
             </plugin>-->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!--使用jib插件-->
+            &lt;!&ndash;使用jib插件&ndash;&gt;
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>1.8.0</version>
                 <configuration>
-                    <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
+                    &lt;!&ndash;from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字&ndash;&gt;
                     <from>
-                        <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
+                        &lt;!&ndash;使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8&ndash;&gt;
                         <image>${jib.base.img}</image>
                     </from>
                     <to>
-                        <!--镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version-->
+                        &lt;!&ndash;镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version&ndash;&gt;
                         <image>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</image>
                     </to>
-                    <!--容器相关的属性-->
+                    &lt;!&ndash;容器相关的属性&ndash;&gt;
                     <container>
-                        <!--要暴露的端口-->
+                        &lt;!&ndash;要暴露的端口&ndash;&gt;
                         <ports>
                             <port>${jib.env.server_port}</port>
                         </ports>
                     </container>
-                    <!--用没配置安全认证的registry-->
+                    &lt;!&ndash;用没配置安全认证的registry&ndash;&gt;
                     <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- 添加docker-maven-plugin插件 -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>${docker.repostory}/${project.artifactId}:${project.version}</imageName>
+                    <!-- 指定Dockerfile所在的路径 -->
+
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <dockerHost>http://192.168.0.155:2375</dockerHost>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                    <serverId>docker-harbor</serverId>
+                    <registryUrl>${docker.repostory}</registryUrl>
+                    <pushImage>true</pushImage>
                 </configuration>
             </plugin>
         </plugins>
