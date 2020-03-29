@@ -3,10 +3,16 @@ stages:
   - build
   - deploy
 
+# 设置全局变量
+variables:
+  REGISTRY_HOST: 192.168.0.155
+  REGISTRY_GROUP: background
+  PROJECT_NAME: sms-bombing
+
 .job_template_deploy: &job_k8s_deploy |
   cd kubernetes
   sed -i "s/<REPLICAS_NUM>/$REPLICAS_NUM/g" deployment.yaml
-  cat deployment.yaml
+  sed -i "s/<IMAGE_NAME>/$IMAGE_NAME/g" deployment.yaml
   kubectl apply -f deployment.yaml
   kubectl get pod,svc,deploy
 
@@ -22,9 +28,11 @@ pull:
 
 
 build:
+  variables:
+    IMAGE_NAME: $REGISTRY_HOST/project/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_TAG
   stage: build
   script:
-    - mvn clean package docker:build -Dmaven.test.skip=true
+    - mvn clean package docker:build -Dmaven.test.skip=true -DimageName=$IMAGE_NAME
     - sudo ls -l
   tags:
     - kubernetes
