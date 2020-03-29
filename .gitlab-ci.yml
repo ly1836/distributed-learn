@@ -27,6 +27,7 @@ build:
 deploy:
   stage: deploy
   script:
+    - kubectl delete -f ./kubernetes/deployment.yaml
     - kubectl apply -f ./kubernetes/deployment.yaml
   tags:
     - kubernetes
