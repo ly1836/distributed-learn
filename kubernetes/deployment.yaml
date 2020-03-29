@@ -40,7 +40,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                   livenessProbe:
                       httpGet:
                           scheme: HTTP
-                          path: /
+                          path: /sms/healthz
                           port: 4567
                       initialDelaySeconds: 30
                       periodSeconds: 10
@@ -51,7 +51,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                       httpGet:
                           scheme: HTTP
                           port: 4567
-                          path: /
+                          path: /sms/healthz
                       initialDelaySeconds: 60
                       periodSeconds: 10
                       timeoutSeconds: 15
