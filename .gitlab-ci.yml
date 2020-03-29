@@ -1,8 +1,14 @@
-
 stages:
   - pull
   - build
   - deploy
+
+.job_template_deploy: &job_k8s_deploy |
+  cd kubernetes
+  sed -i "s/<REPLICAS_NUM>/$REPLICAS_NUM/g" deployment.yaml
+  kubectl apply -f deployment.yaml
+  kubectl get pod,svc,deploy
+
 
 pull:
   stage: pull
@@ -25,11 +31,11 @@ build:
     - master
 
 deploy:
+  variables:
+    REPLICAS_NUM: 3
   stage: deploy
   script:
-    - cd kubernetes
-    - kubectl apply -f deployment.yaml
-    - kubectl get pod,svc,deploy
+    - *job_k8s_deploy
   tags:
     - kubernetes
   only:
