@@ -27,7 +27,7 @@ build:
 deploy:
   stage: deploy
   script:
-    - kubectl patch -f ./kubernetes/deployment.yaml
+    - kubectl replace -f ./kubernetes/deployment.yaml
   tags:
     - kubernetes
   only:
