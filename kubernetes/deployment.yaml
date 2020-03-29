@@ -39,7 +39,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                         protocol: TCP
                   livenessProbe:
                       httpGet:
-                          path: \/healthz
+                          path: /sms/healthz
                           port: 4567
                       initialDelaySeconds: 60
                       periodSeconds: 10
@@ -49,7 +49,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                   readinessProbe:
                       httpGet:
                           port: 4567
-                          path: \/healthz
+                          path: /sms/healthz
                       initialDelaySeconds: 60
                       periodSeconds: 10
                       timeoutSeconds: 15
