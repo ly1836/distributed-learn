@@ -33,7 +33,7 @@ build:
 
 deploy:
   variables:
-    REPLICAS_NUM: 3
+    REPLICAS_NUM: 4
   stage: deploy
   script:
     - *job_k8s_deploy
