@@ -156,9 +156,9 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                    <serverId>docker-harbor</serverId>
-                    <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
+                    <retryPushTimeout>10</retryPushTimeout>
+                    <rm>true</rm>
                 </configuration>
             </plugin>
         </plugins>
