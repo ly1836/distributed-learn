@@ -29,13 +29,10 @@ pull:
 
 build:
   variables:
-    IMAGE_NAME: $REGISTRY_HOST/project/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_SHORT_SHA
+    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_SHORT_SHA
   stage: build
   script:
-    - echo $IMAGE_NAME > test.txt
-    - cat test.txt
-    - mvn clean package docker:build -Dimage.name=$IMAGE_NAME -Dmaven.test.skip=true
-    - sudo ls -l
+    - mvn package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
   tags:
     - kubernetes
   only:

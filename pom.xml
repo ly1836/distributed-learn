@@ -52,7 +52,7 @@
         <!-- 默认的激活配置文件 -->
         <jib.env.active>dev</jib.env.active>
         <!-- 默认的端口 -->
-        <jib.env.server_port>8080</jib.env.server_port>
+        <jib.env.server_port>4567</jib.env.server_port>
         <!-- 时区 -->
         <jib.env.tz>Asia/Shanghai</jib.env.tz>
     </properties>
@@ -91,25 +91,25 @@
 
     <build>
         <plugins>
-            <!--<plugin>
+            <!--使用jib插件-->
+            <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
+                <version>1.8.0</version>
                 <configuration>
+                    <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
                     <from>
-                        &lt;!&ndash;base image&ndash;&gt;
+                        <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
                         <image>${jib.base.img}</image>
                     </from>
+                    <!--容器相关的属性-->
                     <container>
-                        <labels>
-                            <MAINTAINER>${jib.maintainer}</MAINTAINER>
-                        </labels>
                         <workingDirectory>/app</workingDirectory>
                         <environment>
-                            &lt;!&ndash; 时区 &ndash;&gt;
+                            <!-- 时区 -->
                             <TZ>${jib.env.tz}</TZ>
-                            &lt;!&ndash; 默认启动配置文件 dev &ndash;&gt;
+                            <!-- 默认启动配置文件 dev -->
                             <ACTIVE>${jib.env.active}</ACTIVE>
-                            &lt;!&ndash; 强制设置默认 8080端口 &ndash;&gt;
                             <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
                             <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
                         </environment>
@@ -119,7 +119,7 @@
                             <arg>-c</arg>
                             <arg>${jib.entrypoint}</arg>
                         </entrypoint>
-                        &lt;!&ndash; 可选操作 &ndash;&gt;
+                        <!--要暴露的端口-->
                         <ports>
                             <port>${jib.env.server_port}</port>
                         </ports>
@@ -128,54 +128,24 @@
                             <volume>/app/heapdump</volume>
                         </volumes>
                     </container>
+                    <!--用没配置安全认证的registry-->
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
-            </plugin>-->
+            </plugin>
 
             <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            &lt;!&ndash;使用jib插件&ndash;&gt;
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>1.8.0</version>
-                <configuration>
-                    &lt;!&ndash;from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字&ndash;&gt;
-                    <from>
-                        &lt;!&ndash;使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8&ndash;&gt;
-                        <image>${jib.base.img}</image>
-                    </from>
-                    <to>
-                        &lt;!&ndash;镜像名称和tag，使用了mvn内置变量${project.version}，表示当前工程的version&ndash;&gt;
-                        <image>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</image>
-                    </to>
-                    &lt;!&ndash;容器相关的属性&ndash;&gt;
-                    <container>
-                        &lt;!&ndash;要暴露的端口&ndash;&gt;
-                        <ports>
-                            <port>${jib.env.server_port}</port>
-                        </ports>
-                    </container>
-                    &lt;!&ndash;用没配置安全认证的registry&ndash;&gt;
-                    <allowInsecureRegistries>true</allowInsecureRegistries>
-                </configuration>
-            </plugin>-->
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- 添加docker-maven-plugin插件 -->
+            &lt;!&ndash; 添加docker-maven-plugin插件 &ndash;&gt;
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <!--<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
-                    <!-- 指定Dockerfile所在的路径 -->
+                    &lt;!&ndash;<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>&ndash;&gt;
+                    &lt;!&ndash; 指定Dockerfile所在的路径 &ndash;&gt;
 
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <dockerHost>http://192.168.0.155:2375</dockerHost>
@@ -190,7 +160,7 @@
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
 
 
