@@ -5,7 +5,7 @@ stages:
 
 # 设置全局变量
 variables:
-  REGISTRY_HOST: 192.168.0.155
+  REGISTRY_HOST: 192.168.0.155:80
   REGISTRY_GROUP: background
   PROJECT_NAME: sms-bombing
 
