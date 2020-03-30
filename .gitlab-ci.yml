@@ -33,7 +33,7 @@ build:
   stage: build
   script:
     #- mvn clean package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
-    - mvn clean package docker:build -Dmaven.test.skip=true
+    - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
