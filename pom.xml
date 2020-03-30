@@ -160,7 +160,6 @@
                     <serverId>docker-harbor</serverId>
                     <pushImage>true</pushImage>
                     <retryPushTimeout>10</retryPushTimeout>
-                    <rm>true</rm>
                 </configuration>
             </plugin>
         </plugins>

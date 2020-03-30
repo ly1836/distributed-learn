@@ -33,6 +33,7 @@ build:
   stage: build
   script:
     - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    - mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
