@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <docker.host>192.168.0.155:2375</docker.host>
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.registry.name>project</docker.registry.name>
 
@@ -91,24 +92,24 @@
 
     <build>
         <plugins>
-            <!--使用jib插件-->
+            <!--&lt;!&ndash;使用jib插件&ndash;&gt;
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
+                    &lt;!&ndash;from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字&ndash;&gt;
                     <from>
-                        <!--使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8-->
+                        &lt;!&ndash;使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8&ndash;&gt;
                         <image>${jib.base.img}</image>
                     </from>
-                    <!--容器相关的属性-->
+                    &lt;!&ndash;容器相关的属性&ndash;&gt;
                     <container>
                         <workingDirectory>/app</workingDirectory>
                         <environment>
-                            <!-- 时区 -->
+                            &lt;!&ndash; 时区 &ndash;&gt;
                             <TZ>${jib.env.tz}</TZ>
-                            <!-- 默认启动配置文件 dev -->
+                            &lt;!&ndash; 默认启动配置文件 dev &ndash;&gt;
                             <ACTIVE>${jib.env.active}</ACTIVE>
                             <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
                             <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
@@ -119,7 +120,7 @@
                             <arg>-c</arg>
                             <arg>${jib.entrypoint}</arg>
                         </entrypoint>
-                        <!--要暴露的端口-->
+                        &lt;!&ndash;要暴露的端口&ndash;&gt;
                         <ports>
                             <port>${jib.env.server_port}</port>
                         </ports>
@@ -128,27 +129,26 @@
                             <volume>/app/heapdump</volume>
                         </volumes>
                     </container>
-                    <!--用没配置安全认证的registry-->
+                    &lt;!&ndash;用没配置安全认证的registry&ndash;&gt;
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
-            <!--<plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            &lt;!&ndash; 添加docker-maven-plugin插件 &ndash;&gt;
+            <!-- 添加docker-maven-plugin插件 -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    &lt;!&ndash;<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>&ndash;&gt;
-                    &lt;!&ndash; 指定Dockerfile所在的路径 &ndash;&gt;
-
+                    <!--<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
+                    <!-- 指定Dockerfile所在的路径 -->
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <dockerHost>http://192.168.0.155:2375</dockerHost>
+                    <dockerHost>http://${docker.host}</dockerHost>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -160,7 +160,7 @@
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
 
 
