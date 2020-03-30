@@ -32,7 +32,7 @@ build:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: build
   script:
-    - mvn package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
+    - mvn clean package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
   tags:
     - kubernetes
   only:
