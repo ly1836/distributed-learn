@@ -32,8 +32,8 @@ build:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: build
   script:
-    #- mvn clean package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
     - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    - mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
