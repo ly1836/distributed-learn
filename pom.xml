@@ -129,7 +129,7 @@
                         </volumes>
                     </container>
                     <!--用没配置安全认证的registry-->
-                    <allowInsecureRegistries>false</allowInsecureRegistries>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
             </plugin>
 
