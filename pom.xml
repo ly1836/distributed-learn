@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>1.8.0</version>
+                <version>1.5.1</version>
                 <configuration>
                     <!--from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字-->
                     <from>
