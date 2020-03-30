@@ -11,8 +11,8 @@ variables:
 
 .job_template_deploy: &job_k8s_deploy |
   cd kubernetes
-  sed -i "s/<REPLICAS_NUM>/$REPLICAS_NUM/g" deployment.yaml
-  sed -i "s/<IMAGE_NAME>/$IMAGE_NAME/g" deployment.yaml
+  sed -i "s#<REPLICAS_NUM>#$REPLICAS_NUM#g" deployment.yaml
+  sed -i "s#<IMAGE_NAME>#$IMAGE_NAME#g" deployment.yaml
   kubectl apply -f deployment.yaml
   kubectl get pod,svc,deploy
 
