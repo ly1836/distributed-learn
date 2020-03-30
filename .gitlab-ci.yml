@@ -29,10 +29,10 @@ pull:
 
 build:
   variables:
-    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_SHORT_SHA:$CI_BUILD_REF
+    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: build
   script:
-    - eval $IMAGE_NAME
+    - 'eval $IMAGE_NAME'
     - mvn package -DskipTests jib:build -Djib.to.image=$IMAGE_NAME
   tags:
     - kubernetes
