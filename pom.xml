@@ -158,7 +158,7 @@
                         </resource>
                     </resources>
                     <serverId>docker-harbor</serverId>
-                    <!--<pushImage>true</pushImage>-->
+                    <pushImage>true</pushImage>
                     <retryPushTimeout>10</retryPushTimeout>
                     <rm>true</rm>
                 </configuration>
