@@ -41,6 +41,7 @@ build:
 deploy:
   variables:
     REPLICAS_NUM: 4
+    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: deploy
   script:
     - *job_k8s_deploy
