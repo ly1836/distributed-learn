@@ -41,9 +41,10 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                         name: http
                         protocol: TCP
                         resources:
-                  limits:
-                      cpu: "<LIMITS_CPU>"
-                      memory: "<LIMITS_MEM>"
+                  resources:
+                      limits:
+                          cpu: "<LIMITS_CPU>"
+                          memory: "<LIMITS_MEM>"
                   livenessProbe:
                       httpGet:
                           path: /sms/healthz
