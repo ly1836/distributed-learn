@@ -47,7 +47,7 @@ build:
 deploy:
   variables:
     REPLICAS_NUM: 2
-    LIMITS_CPU: '1'
+    LIMITS_CPU: '0'
     LIMITS_MEM: 512Mi
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
     NAME_SPACE: test
