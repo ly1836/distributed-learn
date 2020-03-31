@@ -84,9 +84,13 @@ deploy-prod:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_TAG
     NAME_SPACE: test
   stage: deploy-prod
+  when: manual
   script:
     - *job_k8s_deploy
   tags:
     - kubernetes
   only:
-    - master
+    - /^v.*$/
+  except:
+    refs:
+      - branches
