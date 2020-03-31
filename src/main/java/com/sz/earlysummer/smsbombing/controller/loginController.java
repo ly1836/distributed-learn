@@ -18,6 +18,6 @@ public class loginController {
     @GetMapping(value = "register/send-code")
     public String login(HttpServletRequest request, Object object) {
         log.info("requestURL:[{}],ts:[{}]", request.getRequestURL(), System.currentTimeMillis());
-        return "Java project CI/CD Kubernetes.----TEST[10]";
+        return "Java project CI/CD Kubernetes.----TEST[11]";
     }
 }
