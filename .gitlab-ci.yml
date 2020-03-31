@@ -41,7 +41,7 @@ build:
 
 deploy:
   variables:
-    REPLICAS_NUM: 4
+    REPLICAS_NUM: 2
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: deploy
   script:
