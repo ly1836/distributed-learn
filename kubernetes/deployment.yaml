@@ -18,7 +18,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: <NAME_SPACE>
-  labels: sms-bombing
+  labels:
+    app: sms-bombingsms-bombing
 
 ---
 apiVersion: apps/v1	#与k8s集群版本有关，使用 kubectl api-versions 即可查看当前集群支持的版本
