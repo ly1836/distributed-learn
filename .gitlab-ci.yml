@@ -13,6 +13,9 @@ variables:
   cd kubernetes
   sed -i "s#<REPLICAS_NUM>#$REPLICAS_NUM#g" deployment.yaml
   sed -i "s#<IMAGE_NAME>#$IMAGE_NAME#g" deployment.yaml
+  sed -i "s#<LIMITS_CPU>#LIMITS_CPU#g" deployment.yaml
+  sed -i "s#<LIMITS_MEM>#LIMITS_MEM#g" deployment.yaml
+  sed -i "s#<NAME_SPACE>#NAME_SPACE#g" deployment.yaml
   kubectl apply -f deployment.yaml
   kubectl get pod,svc,deploy
 
@@ -42,7 +45,10 @@ build:
 deploy:
   variables:
     REPLICAS_NUM: 2
+    LIMITS_CPU: '1'
+    LIMITS_MEM: 512Mi
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
+    NAME_SPACE: test
   stage: deploy
   script:
     - *job_k8s_deploy

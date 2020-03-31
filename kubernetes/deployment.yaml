@@ -2,6 +2,7 @@ apiVersion: apps/v1	#与k8s集群版本有关，使用 kubectl api-versions 即�
 kind: Deployment	#该配置的类型，我们使用的是 Deployment
 metadata:	        #译名为元数据，即 Deployment 的一些基本属性和信息
     name: sms-bombing-deployment	#Deployment 的名称
+    namespace: <NAME_SPACE>
     labels:	    #标签，可以灵活定位一个或多个资源，其中key和value均可自定义，可以定义多组，目前不需要理解
         app: sms-bombing	#为该Deployment设置key为app，value为nginx的标签
 spec:	        #这是关于该Deployment的描述，可以理解为你期待该Deployment在k8s中如何使用
@@ -39,11 +40,15 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                       - containerPort: 4567
                         name: http
                         protocol: TCP
+                        resources:
+                  limits:
+                      cpu: "<LIMITS_CPU>"
+                      memory: "<LIMITS_MEM>"
                   livenessProbe:
                       httpGet:
                           path: /sms/healthz
                           port: 4567
-                      initialDelaySeconds: 60
+                      initialDelaySeconds: 30
                       periodSeconds: 10
                       timeoutSeconds: 15
                       successThreshold: 1
@@ -52,7 +57,7 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                       httpGet:
                           port: 4567
                           path: /sms/healthz
-                      initialDelaySeconds: 60
+                      initialDelaySeconds: 30
                       periodSeconds: 10
                       timeoutSeconds: 15
                       successThreshold: 1
@@ -62,16 +67,17 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
             restartPolicy: Always
 
 ---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#    name: sms-bombing-service
-#spec:
-#    type: NodePort
-#    selector:
-#        app: sms-bombing
-#    ports:
-#        - port: 80
-#          nodePort: 31111
-#          targetPort: 4567
-#          protocol: TCP
+apiVersion: v1
+kind: Service
+metadata:
+    namespace: <NAME_SPACE>
+    name: sms-bombing-service
+spec:
+    type: NodePort
+    selector:
+        app: sms-bombing
+    ports:
+        - port: 80
+          nodePort: 31111
+          targetPort: 4567
+          protocol: TCP
