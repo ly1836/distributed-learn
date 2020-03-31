@@ -47,7 +47,7 @@ build:
 deploy:
   variables:
     REPLICAS_NUM: 2
-    LIMITS_CPU: '1'
+    LIMITS_CPU: '11'
     LIMITS_MEM: 512Mi
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
     NAME_SPACE: test
@@ -71,7 +71,6 @@ build-on-push-prod:
     - kubernetes
   only:
     - /^v.*$/
-    - tags
   except:
     refs:
       - branches
