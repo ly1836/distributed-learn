@@ -43,8 +43,8 @@ spec:	        #这是关于该Deployment的描述，可以理解为你期待该D
                         resources:
                   resources:
                       limits:
-                          cpu: "<LIMITS_CPU>"
-                          memory: "<LIMITS_MEM>"
+                        cpu: "<LIMITS_CPU>"
+                        memory: "<LIMITS_MEM>"
                   livenessProbe:
                       httpGet:
                           path: /sms/healthz
