@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.host>http://192.168.0.155</docker.host>
+        <docker.host>192.168.0.155</docker.host>
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.registry.name>background</docker.registry.name>
 
