@@ -149,7 +149,7 @@
                     <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
                     <!-- 指定Dockerfile所在的路径 -->
                     <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <<!--dockerHost>${docker.host}</dockerHost>-->
+                    <!--<dockerHost>${docker.host}</dockerHost>-->
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
