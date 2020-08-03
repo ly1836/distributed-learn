@@ -176,7 +176,7 @@
                     <retryPushTimeout>10</retryPushTimeout>-->
                     <imageName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}</imageName>
                     <baseImage>java:8</baseImage>
-                    <dockerHost>tcp://0.0.0.0:${docker.repostory.port}</dockerHost>
+                    <dockerHost>tcp://127.0.0.1:${docker.repostory.port}</dockerHost>
                     <maintainer>leiyang753@gmail.com</maintainer>
                     <workdir>/app</workdir>
                     <cmd>["java", "-version"]</cmd>
