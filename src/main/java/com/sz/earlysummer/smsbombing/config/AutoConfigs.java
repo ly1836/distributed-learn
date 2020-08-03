@@ -2,10 +2,12 @@ package com.sz.earlysummer.smsbombing.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component
 @ConfigurationProperties(prefix = "pepole")
-public class TestAutoConfigs {
+public class AutoConfigs {
 
     private String name;
 }
