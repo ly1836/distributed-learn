@@ -27,8 +27,6 @@
         <jib.base.img>java:8</jib.base.img>
         <!-- 启动参数设置 -->
         <java.entrypoint>
-            $JAVA_OPTS \
-            $JVM_OPTS \
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
             -Denv=$APLLO_DENV \
             -cp /app/resources:/app/classes:/app/libs/* com.sz.earlysummer.smsbombing.SmsBombingApplication
