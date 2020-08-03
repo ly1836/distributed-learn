@@ -28,7 +28,7 @@
         <!-- 启动参数设置 -->
         <java.entrypoint>
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
-            -Denv=$APLLO_DENV \
+            -Denv=PRO \
             -cp /app/resources:/app/classes:/app/libs/* com.sz.earlysummer.smsbombing.SmsBombingApplication
         </java.entrypoint>
         <!--
