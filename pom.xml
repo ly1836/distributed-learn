@@ -27,11 +27,11 @@
         <jib.base.img>java:8</jib.base.img>
         <!-- 启动参数设置 -->
         <jib.entrypoint>
-            java $JAVA_OPTS \
+            $JAVA_OPTS \
             $JVM_OPTS \
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
             -Denv=$APLLO_DENV \
-            -cp /app/resources:/app/classes:/app/libs/* com.gt.FoodmanagerApplication
+            -cp /app/resources:/app/classes:/app/libs/* com.sz.earlysummer.smsbombing.SmsBombingApplication
         </jib.entrypoint>
         <!--
             默认设定JVM的参数
@@ -159,21 +159,6 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <!--<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
-                    <!--<dockerHost>${docker.host}</dockerHost>-->
-                    <!-- 指定Dockerfile所在的路径 -->
-
-                    <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <serverId>docker-harbor</serverId>
-                    <pushImage>true</pushImage>
-                    <retryPushTimeout>10</retryPushTimeout>-->
                     <imageName>${docker.repostory}/${docker.registry.name}/${name}:${version}</imageName>
                     <baseImage>java:8</baseImage>
                     <serverId>my-docker-registry</serverId>
