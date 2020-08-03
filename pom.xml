@@ -174,7 +174,7 @@
                     <serverId>docker-harbor</serverId>
                     <pushImage>true</pushImage>
                     <retryPushTimeout>10</retryPushTimeout>-->
-                    <imageName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</imageName>
+                    <imageName>${docker.repostory}/${docker.registry.name}/${name}:${version}</imageName>
                     <baseImage>java:8</baseImage>
                     <serverId>my-docker-registry</serverId>
                     <maintainer>leiyang753@gmail.com</maintainer>
@@ -216,7 +216,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</imageName>
+                            <imageName>${docker.repostory}/${docker.registry.name}/${name}:${version}</imageName>
                         </configuration>
                     </execution>
                 </executions>
