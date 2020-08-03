@@ -1,5 +1,6 @@
 package com.sz.earlysummer.smsbombing;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +11,7 @@ public class SmsBombingApplication {
 
     public static void main(String[] args) {
         try {
+            log.info("args:[{}]", JSONObject.toJSONString(args));
             final String active = System.getProperty("env", "dev").toLowerCase();
             log.info("active=[{}]", active);
             System.setProperty("spring.profiles.active", active);
