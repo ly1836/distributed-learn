@@ -28,8 +28,7 @@
         <!-- 启动参数设置 -->
         <java.entrypoint>
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
-            -Denv=PRO \
-            -cp /app/resources:/app/classes:/app/libs/* com.sz.earlysummer.smsbombing.SmsBombingApplication
+            -Denv=$APLLO_DENV
         </java.entrypoint>
         <!--
             默认设定JVM的参数
@@ -121,11 +120,11 @@
                     <maintainer>leiyang753@gmail.com</maintainer>
                     <workdir>/app</workdir>
                     <cmd>["java", "-version"]</cmd>
-                    <entryPoint>["java","${java.entrypoint}","-jar","${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["java","${java.entrypoint}","-jar","app.jar"]</entryPoint>
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
                         <resource>
-                            <targetPath>/app</targetPath>
+                            <targetPath>/app/app.jar</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
                         </resource>
