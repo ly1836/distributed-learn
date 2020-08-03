@@ -26,13 +26,13 @@
         <!-- 基础镜像 -->
         <jib.base.img>java:8</jib.base.img>
         <!-- 启动参数设置 -->
-        <jib.entrypoint>
+        <java.entrypoint>
             $JAVA_OPTS \
             $JVM_OPTS \
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
             -Denv=$APLLO_DENV \
             -cp /app/resources:/app/classes:/app/libs/* com.sz.earlysummer.smsbombing.SmsBombingApplication
-        </jib.entrypoint>
+        </java.entrypoint>
         <!--
             默认设定JVM的参数
             参数解释：
@@ -105,48 +105,6 @@
 
     <build>
         <plugins>
-            <!--&lt;!&ndash;使用jib插件&ndash;&gt;
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>1.2.0</version>
-                <configuration>
-                    &lt;!&ndash;from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字&ndash;&gt;
-                    <from>
-                        &lt;!&ndash;使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8&ndash;&gt;
-                        <image>${jib.base.img}</image>
-                    </from>
-                    &lt;!&ndash;容器相关的属性&ndash;&gt;
-                    <container>
-                        <workingDirectory>/app</workingDirectory>
-                        <environment>
-                            &lt;!&ndash; 时区 &ndash;&gt;
-                            <TZ>${jib.env.tz}</TZ>
-                            &lt;!&ndash; 默认启动配置文件 dev &ndash;&gt;
-                            <ACTIVE>${jib.env.active}</ACTIVE>
-                            <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
-                            <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
-                        </environment>
-                        <useCurrentTimestamp>true</useCurrentTimestamp>
-                        <entrypoint>
-                            <arg>/bin/sh</arg>
-                            <arg>-c</arg>
-                            <arg>${jib.entrypoint}</arg>
-                        </entrypoint>
-                        &lt;!&ndash;要暴露的端口&ndash;&gt;
-                        <ports>
-                            <port>${jib.env.server_port}</port>
-                        </ports>
-                        <volumes>
-                            <volume>/app/logs</volume>
-                            <volume>/app/heapdump</volume>
-                        </volumes>
-                    </container>
-                    &lt;!&ndash;用没配置安全认证的registry&ndash;&gt;
-                    <allowInsecureRegistries>true</allowInsecureRegistries>
-                </configuration>
-            </plugin>-->
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -165,7 +123,7 @@
                     <maintainer>leiyang753@gmail.com</maintainer>
                     <workdir>/app</workdir>
                     <cmd>["java", "-version"]</cmd>
-                    <entryPoint>["java","${jib.entrypoint}","-jar","/app.jar"]</entryPoint>
+                    <entryPoint>["java","${java.entrypoint}","-jar","/app.jar"]</entryPoint>
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
                         <resource>
