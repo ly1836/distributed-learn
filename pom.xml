@@ -29,7 +29,7 @@
             java $JAVA_OPTS \
             $JVM_OPTS \
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
-            -Dspring.profiles.active=$ACTIVE \
+            -Denv=$APLLO_DENV \
             -cp /app/resources:/app/classes:/app/libs/* com.gt.FoodmanagerApplication
         </jib.entrypoint>
         <!--
@@ -159,9 +159,10 @@
                 <version>1.2.0</version>
                 <configuration>
                     <!--<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
-                    <!-- 指定Dockerfile所在的路径 -->
-                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <!--<dockerHost>${docker.host}</dockerHost>-->
+                    <!-- 指定Dockerfile所在的路径 -->
+
+                    <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -171,7 +172,21 @@
                     </resources>
                     <serverId>docker-harbor</serverId>
                     <pushImage>true</pushImage>
-                    <retryPushTimeout>10</retryPushTimeout>
+                    <retryPushTimeout>10</retryPushTimeout>-->
+
+                    <baseImage>java:8</baseImage>
+                    <maintainer>leiyang753@gmail.com</maintainer>
+                    <workdir>/app</workdir>
+                    <cmd>["java", "-version"]</cmd>
+                    <entryPoint>["java","${jib.entrypoint}","-jar","/app.jar"]</entryPoint>
+                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/app</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>
