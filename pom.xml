@@ -28,7 +28,7 @@
         <!-- 启动参数设置 -->
         <java.entrypoint>
             -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
-            -Denv=$APLLO_DENV
+            -Denv=PRO
         </java.entrypoint>
         <!--
             默认设定JVM的参数
