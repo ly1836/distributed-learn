@@ -204,10 +204,10 @@
                         <goals>
                             <goal>tag</goal>
                         </goals>
-                        <!--<configuration>
-                            <image>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</image>
-                            <newName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</newName>
-                        </configuration>-->
+                        <configuration>
+                            <image>${docker.repostory}/${docker.registry.name}/${name}:${version}</image>
+                            <newName>${docker.repostory}/${docker.registry.name}/${name}:${version}</newName>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>push-image</id>
