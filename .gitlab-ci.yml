@@ -1,7 +1,6 @@
 stages:
   - pull
   - build
-  - deploy
 
 # 设置全局变量
 variables:
@@ -35,8 +34,9 @@ build:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
   stage: build
   script:
-    - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
-    - mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
+    - mvn clean package docker:build -Dmaven.test.skip=true
+    #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:

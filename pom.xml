@@ -18,20 +18,8 @@
         <java.version>1.8</java.version>
         <docker.host>http://192.168.0.155:2375</docker.host>
         <docker.repostory>192.168.0.155</docker.repostory>
+        <docker.repostory.port>2375</docker.repostory.port>
         <docker.registry.name>background</docker.registry.name>
-
-        <!-- 跳过 -->
-        <jib.skip>false</jib.skip>
-        <!-- 基础镜像 -->
-        <jib.base.img>java:8</jib.base.img>
-        <!-- 启动参数设置 -->
-        <jib.entrypoint>
-            java $JAVA_OPTS \
-            $JVM_OPTS \
-            -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT \
-            -Denv=$APLLO_DENV \
-            -cp /app/resources:/app/classes:/app/libs/* com.gt.FoodmanagerApplication
-        </jib.entrypoint>
         <!--
             默认设定JVM的参数
             参数解释：
@@ -44,18 +32,17 @@
             -XX:HeapDumpPath=/app/heapdump 生成堆转储快照文件所在的目录
             -XX:-OmitStackTraceInFastThrow 大量抛出重复异常的时候打印完整的异常链信息
         -->
-        <jib.env.jvm_opts>
-            -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags
-            -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump
+        <jvm_opts>
+            -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags \
+            -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump \
             -XX:-OmitStackTraceInFastThrow
-        </jib.env.jvm_opts>
-        <jib.maintainer>leiyang="491816301@qq.com"</jib.maintainer>
-        <!-- 默认的激活配置文件 -->
-        <jib.env.active>dev</jib.env.active>
-        <!-- 默认的端口 -->
-        <jib.env.server_port>4567</jib.env.server_port>
-        <!-- 时区 -->
-        <jib.env.tz>Asia/Shanghai</jib.env.tz>
+        </jvm_opts>
+        <!-- 启动参数设置 -->
+        <docker.entrypoint>
+            ${jvm_opts} \
+            -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 \
+            -Dserver.port=$SERVER_PORT -Denv=$APLLO_DENV
+        </docker.entrypoint>
     </properties>
 
     <dependencies>
@@ -104,48 +91,6 @@
 
     <build>
         <plugins>
-            <!--&lt;!&ndash;使用jib插件&ndash;&gt;
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>1.2.0</version>
-                <configuration>
-                    &lt;!&ndash;from节点用来设置镜像的基础镜像，相当于Docerkfile中的FROM关键字&ndash;&gt;
-                    <from>
-                        &lt;!&ndash;使用openjdk官方镜像，tag是8-jdk-stretch，表示镜像的操作系统是debian9,装好了jdk8&ndash;&gt;
-                        <image>${jib.base.img}</image>
-                    </from>
-                    &lt;!&ndash;容器相关的属性&ndash;&gt;
-                    <container>
-                        <workingDirectory>/app</workingDirectory>
-                        <environment>
-                            &lt;!&ndash; 时区 &ndash;&gt;
-                            <TZ>${jib.env.tz}</TZ>
-                            &lt;!&ndash; 默认启动配置文件 dev &ndash;&gt;
-                            <ACTIVE>${jib.env.active}</ACTIVE>
-                            <SERVER_PORT>${jib.env.server_port}</SERVER_PORT>
-                            <JVM_OPTS>${jib.env.jvm_opts}</JVM_OPTS>
-                        </environment>
-                        <useCurrentTimestamp>true</useCurrentTimestamp>
-                        <entrypoint>
-                            <arg>/bin/sh</arg>
-                            <arg>-c</arg>
-                            <arg>${jib.entrypoint}</arg>
-                        </entrypoint>
-                        &lt;!&ndash;要暴露的端口&ndash;&gt;
-                        <ports>
-                            <port>${jib.env.server_port}</port>
-                        </ports>
-                        <volumes>
-                            <volume>/app/logs</volume>
-                            <volume>/app/heapdump</volume>
-                        </volumes>
-                    </container>
-                    &lt;!&ndash;用没配置安全认证的registry&ndash;&gt;
-                    <allowInsecureRegistries>true</allowInsecureRegistries>
-                </configuration>
-            </plugin>-->
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -158,27 +103,14 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <!--<imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
-                    <!--<dockerHost>${docker.host}</dockerHost>-->
-                    <!-- 指定Dockerfile所在的路径 -->
-
-                    <!--<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                    <serverId>docker-harbor</serverId>
-                    <pushImage>true</pushImage>
-                    <retryPushTimeout>10</retryPushTimeout>-->
-                    <imageName>${project.build.finalName}:${version}</imageName>
+                    <!-- 镜像名称从ci文件中取 -->
+                    <imageName>$IMAGE_NAME</imageName>
                     <baseImage>java:8</baseImage>
+                    <serverId>my-docker-registry</serverId>
                     <maintainer>leiyang753@gmail.com</maintainer>
                     <workdir>/app</workdir>
                     <cmd>["java", "-version"]</cmd>
-                    <entryPoint>["java","${jib.entrypoint}","-jar","/app.jar"]</entryPoint>
+                    <entryPoint>["sh","-c","java ${docker.entrypoint} -jar ${project.build.finalName}.jar"]</entryPoint>
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
                         <resource>
@@ -203,24 +135,23 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${project.build.finalName}:${version}</image>
-                            <newName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</newName>
+                            <image>$IMAGE_NAME</image>
+                            <newName>$IMAGE_NAME</newName>
                         </configuration>
                     </execution>
                     <execution>
                         <id>push-image</id>
-                        <phase>deploy</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>${docker.repostory}/${docker.registry.name}/${project.build.finalName}:${version}</imageName>
+                            <imageName>$IMAGE_NAME</imageName>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-
 
 
         <defaultGoal>package</defaultGoal>
