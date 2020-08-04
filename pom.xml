@@ -38,7 +38,7 @@
             -XX:-OmitStackTraceInFastThrow
         </jvm_opts>
         <!-- 启动参数设置 -->
-        <docker.entrypoint>${jvm_opts} -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT -Denv=$APLLO_DENV </docker.entrypoint>
+        <docker.entrypoint>-Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT -Denv=$APLLO_DENV </docker.entrypoint>
     </properties>
 
     <dependencies>
