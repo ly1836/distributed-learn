@@ -33,10 +33,12 @@ pull:
 build:
   variables:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
+    SERVER_PORT: 4567
+    APLLO_DENV: DEV
   stage: build
   script:
     - echo $IMAGE_NAME
-    - mvn clean package docker:build -Dmaven.test.skip=true -DIMAGE_NAME=$IMAGE_NAME
+    - mvn clean package docker:build -Dmaven.test.skip=true -Ddocker.imange.name=$IMAGE_NAME
     #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
     #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
