@@ -26,7 +26,7 @@
         <!-- 基础镜像 -->
         <jib.base.img>java:8</jib.base.img>
         <!-- 启动参数设置 -->
-        <java.entrypoint>-Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Dserver.port=$SERVER_PORT -Denv=PRO</java.entrypoint>
+        <java.entrypoint>-Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8 -Denv=PRO</java.entrypoint>
         <!--
             默认设定JVM的参数
             参数解释：
