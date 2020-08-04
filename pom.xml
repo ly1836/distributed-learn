@@ -20,7 +20,7 @@
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.repostory.port>2375</docker.repostory.port>
         <docker.registry.name>background</docker.registry.name>
-        <docker.imange.name>192.168.0.155/background/sms-bombing:0.0.1-SNAPSHOT</docker.imange.name>
+        <docker.imange.name>$IMAGE_NAME</docker.imange.name>
         <!--
             默认设定JVM的参数
             参数解释：

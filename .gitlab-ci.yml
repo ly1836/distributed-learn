@@ -36,7 +36,7 @@ build:
   stage: build
   script:
     - echo $IMAGE_NAME
-    - mvn clean package docker:build -Dmaven.test.skip=true
+    - mvn clean package docker:build -Dmaven.test.skip=true -DIMAGE_NAME=$IMAGE_NAME
     #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
     #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
