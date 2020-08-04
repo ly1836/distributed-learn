@@ -20,7 +20,8 @@
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.repostory.port>2375</docker.repostory.port>
         <docker.registry.name>background</docker.registry.name>
-        <docker.imange.name>$IMAGE_NAME</docker.imange.name>
+        <!-- 这里的参数由CI文件中maven构建命令中传递赋值 -->
+        <docker.imange.name>docker-images-name</docker.imange.name>
         <!--
             默认设定JVM的参数
             参数解释：
@@ -104,7 +105,6 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <!-- 镜像名称从ci文件中取 -->
                     <imageName>${docker.imange.name}</imageName>
                     <baseImage>java:8</baseImage>
                     <serverId>my-docker-registry</serverId>
