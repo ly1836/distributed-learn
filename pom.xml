@@ -103,7 +103,8 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <imageName>${docker.repostory}/${docker.registry.name}/${name}:${version}</imageName>
+                    <!-- 镜像名称从ci文件中取 -->
+                    <imageName>$IMAGE_NAME</imageName>
                     <baseImage>java:8</baseImage>
                     <serverId>my-docker-registry</serverId>
                     <maintainer>leiyang753@gmail.com</maintainer>
@@ -134,8 +135,8 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${docker.repostory}/${docker.registry.name}/${name}:${version}</image>
-                            <newName>${docker.repostory}/${docker.registry.name}/${name}:${version}</newName>
+                            <image>$IMAGE_NAME</image>
+                            <newName>$IMAGE_NAME</newName>
                         </configuration>
                     </execution>
                     <execution>
@@ -145,7 +146,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>${docker.repostory}/${docker.registry.name}/${name}:${version}</imageName>
+                            <imageName>$IMAGE_NAME</imageName>
                         </configuration>
                     </execution>
                 </executions>
