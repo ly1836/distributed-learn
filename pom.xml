@@ -35,7 +35,7 @@
         <jvm_opts>
             -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags \
             -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump \
-            -XX:-OmitStackTraceInFastThrow
+            -XX:-OmitStackTraceInFastThrow \
         </jvm_opts>
         <!-- 启动参数设置 -->
         <docker.entrypoint>${jvm_opts} -Djava.security.egd=file:/app/./urandom -Dfile.encoding=UTF-8
