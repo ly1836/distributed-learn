@@ -2,6 +2,8 @@ stages:
   - pull
   - build
   - deploy
+  - build-on-push-prod
+  - deploy-prod
 
 # 设置全局变量
 variables:
@@ -38,6 +40,8 @@ build:
   stage: build
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true -Ddocker.imange.name=$IMAGE_NAME
+    # 删除本地镜像
+    - docker rmi $IMAGE_NAME
     #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
     #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
@@ -59,3 +63,40 @@ deploy:
     - kubernetes
   only:
     - master
+
+##正式环境构建
+build-on-push-prod:
+  variables:
+    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_TAG
+  stage: build-on-push-prod
+  script:
+    - sudo git pull .
+    - mvn clean package docker:build -Dmaven.test.skip=true -Ddocker.imange.name=$IMAGE_NAME
+    #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
+  tags:
+    - kubernetes
+  only:
+    - /^v.*$/
+  except:
+    refs:
+      - branches
+
+deploy-prod:
+  variables:
+    REPLICAS_NUM: 2
+    LIMITS_CPU: '0'
+    LIMITS_MEM: 512Mi
+    IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_COMMIT_TAG
+    NAME_SPACE: test
+  stage: deploy-prod
+  when: manual
+  script:
+    - *job_k8s_deploy
+  tags:
+    - kubernetes
+  only:
+    - /^v.*$/
+  except:
+    refs:
+      - branches
