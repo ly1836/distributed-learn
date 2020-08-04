@@ -1,6 +1,7 @@
 stages:
   - pull
   - build
+  - deploy
 
 # 设置全局变量
 variables:
@@ -35,6 +36,8 @@ build:
   stage: build
   script:
     - mvn clean package docker:build -Dmaven.test.skip=true
+    #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
