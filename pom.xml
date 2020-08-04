@@ -33,8 +33,8 @@
             -XX:-OmitStackTraceInFastThrow 大量抛出重复异常的时候打印完整的异常链信息
         -->
         <jvm_opts>
-            -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags
-            -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump
+            -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -XX:+PrintCommandLineFlags \
+            -XX:+HeapDumpOnOutOfMemoryError -Xloggc:/app/heapdump/heap_trace.log -XX:HeapDumpPath=/app/heapdump \
             -XX:-OmitStackTraceInFastThrow
         </jvm_opts>
         <!-- 启动参数设置 -->
