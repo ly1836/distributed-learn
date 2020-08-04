@@ -20,6 +20,7 @@
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.repostory.port>2375</docker.repostory.port>
         <docker.registry.name>background</docker.registry.name>
+        <docker.imange.name>$IMAGE_NAME</docker.imange.name>
         <!--
             默认设定JVM的参数
             参数解释：
@@ -104,7 +105,7 @@
                 <version>1.2.0</version>
                 <configuration>
                     <!-- 镜像名称从ci文件中取 -->
-                    <imageName>$IMAGE_NAME</imageName>
+                    <imageName>${docker.imange.name}</imageName>
                     <baseImage>java:8</baseImage>
                     <serverId>my-docker-registry</serverId>
                     <maintainer>leiyang753@gmail.com</maintainer>
@@ -135,8 +136,8 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>$IMAGE_NAME</image>
-                            <newName>$IMAGE_NAME</newName>
+                            <image>${docker.imange.name}</image>
+                            <newName>${docker.imange.name}</newName>
                         </configuration>
                     </execution>
                     <execution>
@@ -146,7 +147,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>$IMAGE_NAME</imageName>
+                            <imageName>${docker.imange.name}</imageName>
                         </configuration>
                     </execution>
                 </executions>
