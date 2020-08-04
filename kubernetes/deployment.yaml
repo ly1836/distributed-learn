@@ -23,71 +23,88 @@ spec:
       protocol: TCP
 
 ---
-apiVersion: apps/v1	#与k8s集群版本有关，使用 kubectl api-versions 即可查看当前集群支持的版本
-kind: Deployment	#该配置的类型，我们使用的是 Deployment
-metadata:	        #译名为元数据，即 Deployment 的一些基本属性和信息
-    name: sms-bombing-deployment	#Deployment 的名称
-    namespace: <NAME_SPACE>
-    labels:	    #标签，可以灵活定位一个或多个资源，其中key和value均可自定义，可以定义多组，目前不需要理解
-        app: sms-bombing	#为该Deployment设置key为app，value为nginx的标签
-spec:	        #这是关于该Deployment的描述，可以理解为你期待该Deployment在k8s中如何使用
-    #Kubernetes在等待设置的时间后才进行升级
-    #如果没有设置该值，Kubernetes会假设该容器启动起来后就提供服务了
-    #如果没有设置该值，在某些极端情况下可能会造成服务不正常运行
-    minReadySeconds: 5
-    strategy:
-        # indicate which strategy we want for rolling update
-        type: RollingUpdate
-        rollingUpdate:
-            #升级过程中最多可以比原先设置多出的POD数量
-            #例如：maxSurage=1，replicas=5,则表示Kubernetes会先启动1一个新的Pod后才删掉一个旧的POD，整个升级过程中最多会有5+1个POD。
-            maxSurge: 1
-            #升级过程中最多有多少个POD处于无法提供服务的状态
-            #当maxSurge不为0时，该值也不能为0
-            #例如：maxUnavaible=1，则表示Kubernetes整个升级过程中最多会有1个POD处于无法服务的状态。
-            maxUnavailable: 0
-    # 保留3个历史记录
-    revisionHistoryLimit: 3
-    replicas: <REPLICAS_NUM>	#使用该Deployment创建一个应用程序实例
-    selector:	    #标签选择器，与上面的标签共同作用，目前不需要理解
-        matchLabels: #选择包含标签app:nginx的资源
-            app: sms-bombing
-    template:	    #这是选择或创建的Pod的模板
-        metadata:	#Pod的元数据
-            labels:	#Pod的标签，上面的selector即选择包含标签app:nginx的Pod
-                app: sms-bombing
-        spec:	    #期望Pod实现的功能（即在pod中部署）
-            containers:	#生成container，与docker中的container是同一种
-                - name: sms-bombing	#container的名称
-                  image: <IMAGE_NAME>	#该container默认80端口可访问
-                  imagePullPolicy: IfNotPresent
-                  ports:
-                      - containerPort: 4567
-                        name: http
-                        protocol: TCP
-                        resources:
-                  resources:
-                      limits:
-                        cpu: "<LIMITS_CPU>"
-                        memory: "<LIMITS_MEM>"
-                  livenessProbe:
-                      httpGet:
-                          path: /sms/healthz
-                          port: 4567
-                      initialDelaySeconds: 30
-                      periodSeconds: 10
-                      timeoutSeconds: 15
-                      successThreshold: 1
-                      failureThreshold: 3
-                  readinessProbe:
-                      httpGet:
-                          port: 4567
-                          path: /sms/healthz
-                      initialDelaySeconds: 30
-                      periodSeconds: 10
-                      timeoutSeconds: 15
-                      successThreshold: 1
-                      failureThreshold: 3
-            imagePullSecrets:
-                - name: regcred
-            restartPolicy: Always
+#与k8s集群版本有关，使用 kubectl api-versions 即可查看当前集群支持的版本
+apiVersion: apps/v1
+#该配置的类型，我们使用的是 Deployment
+kind: Deployment
+#译名为元数据，即 Deployment 的一些基本属性和信息
+metadata:
+  #Deployment 的名称
+  name: sms-bombing-deployment
+  namespace: <NAME_SPACE>
+  #标签，可以灵活定位一个或多个资源，其中key和value均可自定义，可以定义多组，目前不需要理解
+  labels:
+    #为该Deployment设置key为app，value为nginx的标签
+    app: sms-bombing
+#这是关于该Deployment的描述，可以理解为你期待该Deployment在k8s中如何使用
+spec:
+  #Kubernetes在等待设置的时间后才进行升级
+  #如果没有设置该值，Kubernetes会假设该容器启动起来后就提供服务了
+  #如果没有设置该值，在某些极端情况下可能会造成服务不正常运行
+  minReadySeconds: 5
+  strategy:
+    # indicate which strategy we want for rolling update
+    type: RollingUpdate
+    rollingUpdate:
+      #升级过程中最多可以比原先设置多出的POD数量
+      #例如：maxSurage=1，replicas=5,则表示Kubernetes会先启动1一个新的Pod后才删掉一个旧的POD，整个升级过程中最多会有5+1个POD。
+      maxSurge: 1
+      #升级过程中最多有多少个POD处于无法提供服务的状态
+      #当maxSurge不为0时，该值也不能为0
+      #例如：maxUnavaible=1，则表示Kubernetes整个升级过程中最多会有1个POD处于无法服务的状态。
+      maxUnavailable: 0
+  # 保留3个历史记录
+  revisionHistoryLimit: 3
+  #使用该Deployment创建一个应用程序实例
+  replicas: <REPLICAS_NUM>
+  #标签选择器，与上面的标签共同作用，目前不需要理解
+  selector:
+    #选择包含标签app:nginx的资源
+    matchLabels:
+      app: sms-bombing
+  #这是选择或创建的Pod的模板
+  template:
+    #Pod的元数据
+    metadata:
+      #Pod的标签，上面的selector即选择包含标签app:nginx的Pod
+      labels:
+        app: sms-bombing
+    #期望Pod实现的功能（即在pod中部署）
+    spec:
+      #生成container，与docker中的container是同一种
+      containers:
+        #container的名称
+        - name: sms-bombing
+          #该container默认80端口可访问
+          image: <IMAGE_NAME>
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4567
+              name: http
+              protocol: TCP
+              resources:
+          resources:
+            limits:
+              cpu: "<LIMITS_CPU>"
+              memory: "<LIMITS_MEM>"
+          livenessProbe:
+            httpGet:
+              path: /sms/healthz
+              port: 4567
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              port: 4567
+              path: /sms/healthz
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always

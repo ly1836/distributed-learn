@@ -35,10 +35,15 @@ pull:
 build:
   variables:
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
+    SERVER_PORT: 4567
+    APLLO_DENV: DEV
   stage: build
   script:
-    - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
-    - mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
+    - mvn clean package docker:build -Dmaven.test.skip=true -Ddocker.imange.name=$IMAGE_NAME
+    # 删除本地镜像
+    - docker rmi $IMAGE_NAME
+    #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
@@ -47,7 +52,7 @@ build:
 deploy:
   variables:
     REPLICAS_NUM: 2
-    LIMITS_CPU: '0'
+    LIMITS_CPU: '1'
     LIMITS_MEM: 512Mi
     IMAGE_NAME: $REGISTRY_HOST/$REGISTRY_GROUP/$PROJECT_NAME:$CI_BUILD_REF
     NAME_SPACE: test
@@ -66,8 +71,9 @@ build-on-push-prod:
   stage: build-on-push-prod
   script:
     - sudo git pull .
-    - mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
-    - mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
+    - mvn clean package docker:build -Dmaven.test.skip=true -Ddocker.imange.name=$IMAGE_NAME
+    #- mvn clean package docker:build -DdockerImageName=$IMAGE_NAME -Dmaven.test.skip=true
+    #- mvn clean docker:removeImage -DimageName=$IMAGE_NAME -Dmaven.test.skip=true
   tags:
     - kubernetes
   only:
