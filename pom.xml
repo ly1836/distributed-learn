@@ -16,10 +16,10 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <docker.host>http://192.168.0.155:2375</docker.host>
+        <!--<docker.host>http://192.168.0.155:2375</docker.host>
         <docker.repostory>192.168.0.155</docker.repostory>
         <docker.repostory.port>2375</docker.repostory.port>
-        <docker.registry.name>background</docker.registry.name>
+        <docker.registry.name>background</docker.registry.name>-->
         <!-- 这里的参数由CI文件中maven构建命令中传递赋值 -->
         <docker.imange.name>docker-images-name</docker.imange.name>
         <!--
