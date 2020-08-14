@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sz.earlysummer</groupId>
-    <artifactId>sms-bombing</artifactId>
+    <artifactId>distributed-learn</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sms-bombing</name>
+    <name>distributed-learn</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
