@@ -15,7 +15,7 @@ public class SmsBombingApplication {
             final String active = System.getProperty("env", "dev").toLowerCase();
             log.info("active=[{}]", active);
             System.setProperty("spring.profiles.active", active);
-            System.setProperty("apollo.meta", "http://192.168.0.160:8181");
+            //System.setProperty("apollo.meta", "http://192.168.0.160:8181");
             SpringApplication.run(SmsBombingApplication.class, args);
         }catch (Exception ex){
             ex.printStackTrace();
